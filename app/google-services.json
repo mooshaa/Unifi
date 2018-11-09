@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "238288284990",
+    "firebase_url": "https://unifi-a41a2.firebaseio.com",
+    "project_id": "unifi-a41a2",
+    "storage_bucket": "unifi-a41a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238288284990:android:f643a85a941481e6",
+        "android_client_info": {
+          "package_name": "com.unifi.comp590.unifi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238288284990-3fp7cs3v4am3gdl6cr1q13soip3bbpoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unifi.comp590.unifi",
+            "certificate_hash": "0fd07dce36966f05137a84e32e913ad1d5f7f6f6"
+          }
+        },
+        {
+          "client_id": "238288284990-hji94k0gde4vtto8h372iof9t6748imo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw5Kii2JNUPK3borqB5YPFUNEYdZnGdLo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238288284990-hji94k0gde4vtto8h372iof9t6748imo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
