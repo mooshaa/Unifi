@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/unifi_background"
+    tools:context=".NewAccountActivity">
+    <include layout="@layout/toolbar_main"
+        android:id="@+id/activity_new_account_toolbar"
+        ></include>
+    <EditText
+        android:id="@+id/name_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/email_signup"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="235dp"
+        android:ems="10"
+        android:hint="@string/sign_up_name"
+        android:inputType="textMultiLine|textEmailAddress"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
+
+    <EditText
+        android:id="@+id/email_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/password_signup"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="189dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textMultiLine|textEmailAddress"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
+
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp"
+        android:background="@android:color/transparent"
+        android:padding="10dp"
+        android:text="@string/sign_up"
+        android:textColor="@android:color/background_light"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/password_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sign_up"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="89dp"
+        android:layout_marginLeft="89dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="99dp"
+        android:ems="10"
+        android:hint="@string/email_password"
+        android:inputType="textMultiLine|textPassword"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
+</RelativeLayout>

@@ -10,8 +10,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class UnifiActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    Toolbar mToolbar;
+    private FirebaseAuth mAuth;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class UnifiActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mToolbar = (Toolbar) findViewById(R.id.activity_unify_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setTitle("Unifi");
     }
 
     @Override

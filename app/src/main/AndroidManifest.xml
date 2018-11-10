@@ -25,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UnifyLoginActivity"></activity>
+        <activity android:name=".UnifyLoginActivity" />
+        <activity android:name=".NewAccountActivity"
+            android:parentActivityName=".UnifyLoginActivity"></activity>
     </application>
 
 </manifest>

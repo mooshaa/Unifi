@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/unifi_background"
     tools:context=".UnifyLoginActivity">
+    <include layout="@layout/toolbar_main"
+        android:id="@+id/activity_login_toolbar"
+        ></include>
 
     <Button
         android:id="@+id/sign_in"
@@ -24,7 +27,7 @@
         android:id="@+id/password_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/no_account"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
@@ -40,15 +43,15 @@
         android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="174dp"
-        android:layout_height="35dp"
+        android:id="@+id/no_account"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="98dp"
+        android:layout_marginBottom="85dp"
         android:background="@android:color/transparent"
         android:padding="10dp"
-        android:text="@string/old_account"
+        android:text="@string/new_account"
         android:textColor="@android:color/background_light"
         android:textSize="8sp" />
 
