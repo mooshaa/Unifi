@@ -3,18 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/unifi_welcome"
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="296dp"
-        android:layout_height="178dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="107dp"
-        app:srcCompat="@android:drawable/star_big_on" />
 </RelativeLayout>
