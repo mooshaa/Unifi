@@ -18,10 +18,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class NewAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDataReference;
     private Toolbar mToolbar;
     private EditText mRegisterName;
     private EditText mRegisterEmail;
@@ -60,7 +63,7 @@ public class NewAccountActivity extends AppCompatActivity {
 
     }
 
-    private void RegisterAccount(String name, String email, String password) {
+    private void RegisterAccount(final String name, String email, String password) {
 
       AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
         builder.setCancelable(false);
@@ -84,10 +87,24 @@ public class NewAccountActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Intent intent = new Intent(NewAccountActivity.this, UnifiActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
+                        String current_user_ID = mAuth.getCurrentUser().getUid();
+                        mDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_ID);
+                        mDataReference.child("user_name").setValue(name);
+                        mDataReference.child("user_status").setValue("Hey there, try Unifi");
+                        mDataReference.child("user_image").setValue("default_profile");
+                        mDataReference.child("user_thumbnail").setValue("default_profile_thumb")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(NewAccountActivity.this, UnifiActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        });
+
 
                     } else {
                         Toast.makeText(NewAccountActivity.this, "Error Occured, Try Again!", Toast.LENGTH_LONG).show();
