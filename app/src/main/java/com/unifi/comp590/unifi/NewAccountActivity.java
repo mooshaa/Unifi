@@ -2,6 +2,7 @@ package com.unifi.comp590.unifi;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,10 +22,11 @@ public class NewAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
-    private EditText RegisterName;
-    private EditText RegisterEmail;
-    private EditText RegisterPassword;
-    private Button ButtonSignUp;
+    private EditText mRegisterName;
+    private EditText mRegisterEmail;
+    private EditText mRegisterPassword;
+    private Button mButtonSignUp;
+    private AlertDialog mLoading;
 
 
     @Override
@@ -36,16 +39,21 @@ public class NewAccountActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Sign Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RegisterName = (EditText) findViewById(R.id.name_signup);
-        RegisterEmail = (EditText) findViewById(R.id.email_signup);
-        RegisterPassword = (EditText) findViewById(R.id.password_signup);
-        ButtonSignUp = (Button) findViewById(R.id.sign_up);
-        ButtonSignUp.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_bar);
+        mLoading = builder.create();
+
+        mRegisterName = (EditText) findViewById(R.id.name_signup);
+        mRegisterEmail = (EditText) findViewById(R.id.email_signup);
+        mRegisterPassword = (EditText) findViewById(R.id.password_signup);
+        mButtonSignUp = (Button) findViewById(R.id.sign_up);
+        mButtonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = RegisterName.getText().toString();
-                String email = RegisterEmail.getText().toString();
-                String password = RegisterPassword.getText().toString();
+                String name = mRegisterName.getText().toString();
+                String email = mRegisterEmail.getText().toString();
+                String password = mRegisterPassword.getText().toString();
 
                 RegisterAccount(name, email, password);
             }
@@ -65,6 +73,7 @@ public class NewAccountActivity extends AppCompatActivity {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
         } else {
+            mLoading.show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -81,6 +90,7 @@ public class NewAccountActivity extends AppCompatActivity {
             });
 
         }
+        mLoading.dismiss();
 
     }
 }
