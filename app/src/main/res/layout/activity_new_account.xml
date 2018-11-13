@@ -22,6 +22,7 @@
         android:ems="10"
         android:hint="@string/sign_up_name"
         android:inputType="textMultiLine|textEmailAddress"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
 
     <EditText
@@ -34,6 +35,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textMultiLine|textEmailAddress"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
 
     <Button
@@ -66,5 +68,6 @@
         android:ems="10"
         android:hint="@string/email_password"
         android:inputType="textMultiLine|textPassword"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/common_google_signin_btn_text_dark_default" />
 </RelativeLayout>
