@@ -1,11 +1,14 @@
 package com.unifi.comp590.unifi;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TableLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,12 +17,23 @@ public class UnifiActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private TabsPagerAdapter mTabsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unifi);
         mAuth = FirebaseAuth.getInstance();
+
+        mViewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
+        mTabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mTabsPagerAdapter);
+        mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+
         mToolbar = (Toolbar) findViewById(R.id.activity_unify_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Unifi");
