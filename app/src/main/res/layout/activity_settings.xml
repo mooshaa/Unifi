@@ -26,10 +26,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="243dp"
+        android:gravity="center"
         android:hint="@string/enter_username"
         android:text="UserName"
-        android:gravity="center"
         android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
         android:textSize="24sp" />
 
     <EditText
@@ -41,11 +42,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="130dp"
+        android:gravity="center"
         android:hint="@string/enter_status"
         android:text="Status"
-        android:gravity="center"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
+        android:textColorHint="@android:color/white"
         android:textSize="18sp"
         android:textStyle="italic" />
 
