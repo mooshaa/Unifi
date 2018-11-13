@@ -33,7 +33,7 @@ public class NewAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_account);
-
+        mAuth = FirebaseAuth.getInstance();
         mToolbar = (Toolbar) findViewById(R.id.activity_new_account_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Sign Up");
@@ -73,7 +73,7 @@ public class NewAccountActivity extends AppCompatActivity {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
         } else {
-            mLoading.show();
+//            mLoading.show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -90,7 +90,7 @@ public class NewAccountActivity extends AppCompatActivity {
             });
 
         }
-        mLoading.dismiss();
+//        mLoading.dismiss();
 
     }
 }
