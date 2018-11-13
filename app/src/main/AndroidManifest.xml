@@ -26,8 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".UnifyLoginActivity" />
-        <activity android:name=".NewAccountActivity"
-            android:parentActivityName=".UnifyLoginActivity"></activity>
+        <activity
+            android:name=".NewAccountActivity"
+            android:parentActivityName=".UnifyLoginActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

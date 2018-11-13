@@ -97,7 +97,6 @@ public class NewAccountActivity extends AppCompatActivity {
 
         }
 
-        //TODO loading doesnt show up Number 8
 
     }
 }

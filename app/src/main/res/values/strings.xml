@@ -10,6 +10,8 @@
     <string name="chats">Chats</string>
     <string name="request">Friend Requests</string>
     <string name="friends">Friends</string>
+    <string name="enter_status">Enter your status here</string>
+    <string name="enter_username">Enter your Username here</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

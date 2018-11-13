@@ -42,7 +42,7 @@ public class UnifiActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser= mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             LogoutUser();
         }
@@ -67,11 +67,15 @@ public class UnifiActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-
-        if (item.getItemId() == R.id.main_account_logout) {
-            mAuth.signOut();
-            LogoutUser();
+        switch (item.getItemId()) {
+            case R.id.main_account_logout:
+                mAuth.signOut();
+                LogoutUser();
+            case R.id.main_account_settings:
+                Intent intent = new Intent(UnifiActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            default:
+                return true;
         }
-        return true;
     }
 }
