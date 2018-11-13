@@ -26,7 +26,6 @@ public class NewAccountActivity extends AppCompatActivity {
     private EditText mRegisterEmail;
     private EditText mRegisterPassword;
     private Button mButtonSignUp;
-    private AlertDialog mLoading;
 
 
     @Override
@@ -39,10 +38,7 @@ public class NewAccountActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Sign Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
-        builder.setCancelable(false);
-        builder.setView(R.layout.progress_bar);
-        mLoading = builder.create();
+
 
         mRegisterName = (EditText) findViewById(R.id.name_signup);
         mRegisterEmail = (EditText) findViewById(R.id.email_signup);
@@ -62,6 +58,11 @@ public class NewAccountActivity extends AppCompatActivity {
     }
 
     private void RegisterAccount(String name, String email, String password) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_bar);
+        AlertDialog mLoading = builder.create();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Name", Toast.LENGTH_LONG).show();
 
@@ -73,6 +74,7 @@ public class NewAccountActivity extends AppCompatActivity {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
         } else {
+
             mLoading.show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -91,6 +93,7 @@ public class NewAccountActivity extends AppCompatActivity {
 
         }
         mLoading.dismiss();
+        //TODO loading doesnt show up Number 8
 
     }
 }
