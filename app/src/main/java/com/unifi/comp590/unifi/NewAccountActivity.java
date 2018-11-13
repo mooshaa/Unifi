@@ -39,7 +39,7 @@ public class NewAccountActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Sign Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_bar);
         mLoading = builder.create();
@@ -73,7 +73,7 @@ public class NewAccountActivity extends AppCompatActivity {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
         } else {
-//            mLoading.show();
+            mLoading.show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -90,7 +90,7 @@ public class NewAccountActivity extends AppCompatActivity {
             });
 
         }
-//        mLoading.dismiss();
+        mLoading.dismiss();
 
     }
 }
