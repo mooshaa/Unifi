@@ -1,5 +1,6 @@
 package com.unifi.comp590.unifi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,8 @@ public class NewAccountActivity extends AppCompatActivity {
     private EditText mRegisterEmail;
     private EditText mRegisterPassword;
     private Button mButtonSignUp;
+//    private ProgressDialog mLoading;
+
 
 
     @Override
@@ -37,7 +40,7 @@ public class NewAccountActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Sign Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+//        mLoading = new ProgressDialog(this);
 
 
         mRegisterName = (EditText) findViewById(R.id.name_signup);
@@ -59,10 +62,10 @@ public class NewAccountActivity extends AppCompatActivity {
 
     private void RegisterAccount(String name, String email, String password) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
+      AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_bar);
-        AlertDialog mLoading = builder.create();
+        final AlertDialog mLoading = builder.create();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Name", Toast.LENGTH_LONG).show();
 
@@ -74,7 +77,8 @@ public class NewAccountActivity extends AppCompatActivity {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
         } else {
-
+//            mLoading.setTitle("Signing Up");
+//            mLoading.setMessage("Please Wait!");
             mLoading.show();
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -87,12 +91,12 @@ public class NewAccountActivity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(NewAccountActivity.this, "Error Occured, Try Again!", Toast.LENGTH_LONG).show();
-                    }
+                    }mLoading.dismiss();
                 }
             });
 
         }
-        mLoading.dismiss();
+
         //TODO loading doesnt show up Number 8
 
     }

@@ -3,6 +3,7 @@ package com.unifi.comp590.unifi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,8 +26,8 @@ public class UnifyLoginActivity extends AppCompatActivity {
     private EditText mLoginEmail;
     private EditText mLoginPassword;
     private FirebaseAuth mAuth;
-    private ProgressDialog mLoading;
-
+    //    private ProgressDialog mLoading;
+//    private AlertDialog mLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class UnifyLoginActivity extends AppCompatActivity {
                 startActivity(new_account);
             }
         });
-        mLoading = new ProgressDialog(this);
+//        mLoading = new ProgressDialog(this);
         mLoginEmail = (EditText) findViewById(R.id.email_login);
         mLoginPassword = (EditText) findViewById(R.id.password_login);
         mLogin = (Button) findViewById(R.id.sign_in);
@@ -60,6 +61,11 @@ public class UnifyLoginActivity extends AppCompatActivity {
     }
 
     private void LoginUserAccount(String email, String password) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(UnifyLoginActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_bar);
+        final AlertDialog mLoading = builder.create();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(UnifyLoginActivity.this, "Please Enter Your Email", Toast.LENGTH_SHORT).show();
 
@@ -68,8 +74,9 @@ public class UnifyLoginActivity extends AppCompatActivity {
             Toast.makeText(UnifyLoginActivity.this, "Please Enter Your Password", Toast.LENGTH_SHORT).show();
 
         } else {
-            mLoading.setTitle("Logging In");
-            mLoading.setMessage("Please Wait!");
+
+//            mLoading.setTitle("Logging In");
+//            mLoading.setMessage("Please Wait!");
             mLoading.show();
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
