@@ -91,7 +91,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         mDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_ID);
                         mDataReference.child("user_name").setValue(name);
                         mDataReference.child("user_status").setValue("Hey there, try Unifi");
-                        mDataReference.child("user_image").setValue("default_profile");
+                        mDataReference.child("user_image").setValue("https://firebasestorage.googleapis.com/v0/b/unifi-a41a2.appspot.com/o/Profile_Image%2FDrAgTNj.png?alt=media&token=3bbb9544-c1e4-4ed7-9953-bd03aea0c74f");
                         mDataReference.child("user_thumbnail").setValue("default_profile_thumb")
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
