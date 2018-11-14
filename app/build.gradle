@@ -33,5 +33,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 
 }
