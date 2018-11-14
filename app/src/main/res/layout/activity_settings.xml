@@ -63,4 +63,22 @@
         android:text="SAVE"
         android:textColor="@android:color/white" />
 
+    <ImageButton
+        android:id="@+id/settings_image_edit_button_opaque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/account_settings_user_image"
+        android:layout_alignBottom="@+id/account_settings_user_image"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/settings_image_edit_button_transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/account_settings_user_image"
+        android:layout_alignBottom="@+id/account_settings_user_image"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_edit_black_transparent_24dp" />
+
 </RelativeLayout>
