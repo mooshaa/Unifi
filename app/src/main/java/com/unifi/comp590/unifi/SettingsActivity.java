@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -82,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String thumbnail = dataSnapshot.child("user_thumbnail").getValue().toString();
                 settingsName.setText(name);
                 settingsStatus.setText(status);
+                Picasso.get().load(image).into(settingsImage);
 //                settingsImage.setImageBitmap();
             }
 
@@ -128,9 +130,16 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(SettingsActivity.this, "Profile picture updated.", Toast.LENGTH_LONG).show();
+                            String dlURL = task.getResult().getStorage().getDownloadUrl().toString();
+                            mDatabaseReference.child("user_image").setValue(dlURL).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(SettingsActivity.this, "Profile picture updated.", Toast.LENGTH_LONG).show();
+
+                                }
+                            });
                         } else {
-                            Toast.makeText(SettingsActivity.this, "Error while updated picture", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SettingsActivity.this, "Error while updating picture", Toast.LENGTH_LONG).show();
 
                         }
                     }
