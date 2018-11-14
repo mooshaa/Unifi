@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -84,7 +86,6 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsName.setText(name);
                 settingsStatus.setText(status);
                 Picasso.get().load(image).into(settingsImage);
-//                settingsImage.setImageBitmap();
             }
 
             @Override
@@ -109,8 +110,32 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = settingsName.getText().toString();
                 String status = settingsStatus.getText().toString();
+                UpdateEntries(name, status);
             }
         });
+    }
+
+    private void UpdateEntries(String name, String status) {
+        final AlertDialog mLoading = LoadingCircle.Circle(SettingsActivity.this);
+
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Username cant be empty", Toast.LENGTH_SHORT).show();
+        }
+        if (TextUtils.isEmpty(status)) {
+            Toast.makeText(this, "Status cant be empty", Toast.LENGTH_SHORT).show();
+        } else {
+            mLoading.show();
+            mDatabaseReference.child("user_status").setValue(status).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        mLoading.dismiss();
+                        Toast.makeText(SettingsActivity.this, "Changes Saved", Toast.LENGTH_LONG).show();
+                        SettingsActivity.this.finish();
+                    }
+                }
+            });
+        }
     }
 
     @Override

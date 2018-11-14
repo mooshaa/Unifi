@@ -65,10 +65,10 @@ public class NewAccountActivity extends AppCompatActivity {
 
     private void RegisterAccount(final String name, String email, String password) {
 
-      AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
-        builder.setCancelable(false);
-        builder.setView(R.layout.progress_bar);
-        final AlertDialog mLoading = builder.create();
+//      AlertDialog.Builder builder = new AlertDialog.Builder(NewAccountActivity.this);
+//        builder.setCancelable(false);
+//        builder.setView(R.layout.progress_bar);
+        final AlertDialog mLoading = LoadingCircle.Circle(NewAccountActivity.this);
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Name", Toast.LENGTH_LONG).show();
 
