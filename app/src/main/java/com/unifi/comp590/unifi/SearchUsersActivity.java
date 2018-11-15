@@ -65,6 +65,8 @@ public class SearchUsersActivity extends AppCompatActivity {
             view = itemView;
         }
 
+
+
         public void setUser_name(String user_name) {
             TextView name = (TextView) view.findViewById(R.id.users_layout_user_name);
             name.setText(user_name);
@@ -77,7 +79,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         }public void setUser_image(String user_image, Context context) {
             CircleImageView image = (CircleImageView) view.findViewById(R.id.users_layout_profile_image);
-            Picasso.get().load(user_image).into(image);
+            Picasso.get().load(user_image).placeholder(R.drawable.pcdefault_small).into(image);
 
         }
     }

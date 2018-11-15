@@ -31,6 +31,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -85,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String thumbnail = dataSnapshot.child("user_thumbnail").getValue().toString();
                 settingsName.setText(name);
                 settingsStatus.setText(status);
-                Picasso.get().load(image).into(settingsImage);
+                Picasso.get().load(image).placeholder(R.drawable.pcdefault_small).into(settingsImage);
             }
 
             @Override
@@ -149,6 +151,10 @@ public class SettingsActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
+
+                File thumbnaillocation = new File(resultUri.getPath());
+
+
                 String user_id = mAuth.getCurrentUser().getUid();
                 StorageReference filePath = mImageStorageReference.child(user_id+".jpg");
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
