@@ -1,6 +1,7 @@
 package com.unifi.comp590.unifi;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ public class UnifiActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private TabsPagerAdapter mTabsPagerAdapter;
+    private FloatingActionButton mNewMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,15 @@ public class UnifiActivity extends AppCompatActivity {
         mViewPager.setAdapter(mTabsPagerAdapter);
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+        mNewMessage = (FloatingActionButton) findViewById(R.id.write_message_floating_button);
+        mNewMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UnifiActivity.this, SearchUsersActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         mToolbar = (Toolbar) findViewById(R.id.activity_unify_toolbar);

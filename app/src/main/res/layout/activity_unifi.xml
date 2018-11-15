@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".UnifiActivity">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/write_message_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/write_message" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
