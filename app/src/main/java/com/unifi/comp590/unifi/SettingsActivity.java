@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +44,7 @@ import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final String TAG ="SettingsActivity";
     private CircleImageView settingsImage;
     private EditText settingsName;
     private EditText settingsStatus;
@@ -55,6 +58,10 @@ public class SettingsActivity extends AppCompatActivity {
     private Bitmap thumbnailbitmap;
     private StorageReference thumbreference;
 
+    public static class downloadUrls {
+        public static String dlURL;
+        public   static String thumbdlURL;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("user_name").getValue().toString();
                 String status = dataSnapshot.child("user_status").getValue().toString();
                 String image = dataSnapshot.child("user_image").getValue().toString();
-                String thumbnail = dataSnapshot.child("user_thumbnail").getValue().toString();
+//                String thumbnail = dataSnapshot.child("user_thumbnail").getValue().toString();
                 settingsName.setText(name);
                 settingsStatus.setText(status);
                 Picasso.get().load(image).placeholder(R.drawable.pcdefault_small).into(settingsImage);
@@ -151,6 +158,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        final AlertDialog mLoading = LoadingCircle.Circle(SettingsActivity.this);
+
         if (requestCode == GALLERY_CODE && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1).start(this);
@@ -158,6 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
+                mLoading.show();
                 Uri resultUri = result.getUri();
 
                 File thumbUri = new File(resultUri.getPath());
@@ -176,21 +186,37 @@ public class SettingsActivity extends AppCompatActivity {
 
                 StorageReference filePath = mImageStorageReference.child(user_id+".jpg");
                 final StorageReference thumbPath = thumbreference.child(user_id + ".jpg");
-
+                Log.d(TAG, "onActivityResult:1 "+thumbPath);
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
-                            final String dlURL = task.getResult().getStorage().getDownloadUrl().toString();
+
+                            task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                   downloadUrls.dlURL = uri.toString();
+                                }
+                            });
+                            Log.d(TAG, "onActivityResult:2 "+ downloadUrls.dlURL);
+
                             UploadTask uploadTask = thumbPath.putBytes(thumbByte);
                             uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                    String thumbdlURL = task.getResult().getStorage().getDownloadUrl().toString();
+
+                                            task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    downloadUrls.thumbdlURL = uri.toString();
+                                                }
+                                            });
+                                    Log.d(TAG, "onActivityResult:3 "+ downloadUrls.thumbdlURL);
+
                                     if (task.isSuccessful()) {
                                         Map user_images = new HashMap();
-                                        user_images.put("user_image", dlURL);
-                                        user_images.put("user_thumbnail",thumbdlURL);
+                                        user_images.put("user_image", downloadUrls.dlURL);
+                                        user_images.put("user_thumbnail", downloadUrls.thumbdlURL);
                                         mDatabaseReference.updateChildren(user_images).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -202,8 +228,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             });
 
-
+                            mLoading.dismiss();
                         } else {
+
                             Toast.makeText(SettingsActivity.this, "Error while updating picture", Toast.LENGTH_LONG).show();
 
                         }
