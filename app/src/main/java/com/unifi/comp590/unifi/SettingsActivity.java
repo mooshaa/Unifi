@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -70,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         String user_id = mAuth.getCurrentUser().getUid();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+        mDatabaseReference.keepSynced(true);
         mImageStorageReference = FirebaseStorage.getInstance().getReference().child("Profile_Image");
         thumbreference = FirebaseStorage.getInstance().getReference().child("Thumbnails");
 
@@ -98,11 +101,22 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("user_name").getValue().toString();
                 String status = dataSnapshot.child("user_status").getValue().toString();
-                String image = dataSnapshot.child("user_image").getValue().toString();
+                final String image = dataSnapshot.child("user_image").getValue().toString();
 //                String thumbnail = dataSnapshot.child("user_thumbnail").getValue().toString();
                 settingsName.setText(name);
                 settingsStatus.setText(status);
-                Picasso.get().load(image).placeholder(R.drawable.pcdefault_small).into(settingsImage);
+                Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.pcdefault_small).into(settingsImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load(image).placeholder(R.drawable.pcdefault_small).into(settingsImage);
+
+                    }
+                });
             }
 
             @Override
