@@ -50,7 +50,7 @@ public class SearchUsersActivity extends AppCompatActivity {
             protected void populateViewHolder(UsersViewHolder viewHolder, Users model, int position) {
                 viewHolder.setUser_name(model.getUser_name());
                 viewHolder.setUser_status(model.getUser_status());
-                viewHolder.setUser_image(model.getUser_image(), getApplicationContext());
+                viewHolder.setUser_thumbnail(model.getUser_thumbnail());
             }
         };
 
@@ -77,11 +77,16 @@ public class SearchUsersActivity extends AppCompatActivity {
             TextView status = (TextView) view.findViewById(R.id.users_layout_status);
             status.setText(user_status);
 
-        }public void setUser_image(String user_image, Context context) {
+        } public void setUser_thumbnail(String user_thumbnail) {
             CircleImageView image = (CircleImageView) view.findViewById(R.id.users_layout_profile_image);
-            Picasso.get().load(user_image).placeholder(R.drawable.pcdefault_small).into(image);
+            Picasso.get().load(user_thumbnail).placeholder(R.drawable.pcdefault_small).into(image);
 
         }
+//        public void setUser_image(String user_image, Context context) {
+//            CircleImageView image = (CircleImageView) view.findViewById(R.id.users_layout_profile_image);
+//            Picasso.get().load(user_image).placeholder(R.drawable.pcdefault_small).into(image);
+//
+//        }
     }
 
 }

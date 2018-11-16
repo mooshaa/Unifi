@@ -4,14 +4,16 @@ public class Users {
     public String user_name;
     public String user_image;
     public String user_status;
+    public String user_thumbnail;
 
     public Users() {
     }
 
-    public Users(String user_name, String user_image, String user_status) {
+    public Users(String user_name, String user_image, String user_status, String user_thumbnail) {
         this.user_name = user_name;
         this.user_image = user_image;
         this.user_status = user_status;
+        this.user_thumbnail = user_thumbnail;
     }
 
     public String getUser_name() {
@@ -38,4 +40,11 @@ public class Users {
         this.user_status = user_status;
     }
 
+    public String getUser_thumbnail() {
+        return user_thumbnail;
+    }
+
+    public void setUser_thumbnail(String user_thumbnail) {
+        this.user_thumbnail = user_thumbnail;
+    }
 }
