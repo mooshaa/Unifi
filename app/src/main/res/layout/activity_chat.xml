@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/unifi_welcome"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".ChatActivity">
+
+    <include
+        layout="@layout/chat_user_toolbar"
+        android:id="@+id/chat_toolbar" />
 
 </RelativeLayout>
