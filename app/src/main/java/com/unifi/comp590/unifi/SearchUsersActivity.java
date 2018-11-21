@@ -98,7 +98,8 @@ public class SearchUsersActivity extends AppCompatActivity {
             });
 
         }
-//        public void setser_thumbnail(String user_thumbnail){
+//    TODO ^^^^^^^^
+//    public void setser_thumbnail(String user_thumbnail){
 //            CircleImageView imageView = (CircleImageView) view.findViewById(R.id.users_layout_profile_image);
 //            Picasso.get().load(user_thumbnail).placeholder(R.drawable.pcdefault_small).into(imageView);
 //        }

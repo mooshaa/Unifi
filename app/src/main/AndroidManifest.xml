@@ -46,9 +46,10 @@
         <activity
             android:name=".SearchUsersActivity"
             android:parentActivityName=".UnifiActivity" />
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".UnifiActivity"
-            ></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".UnifiActivity" />
+        <activity android:name=".ChatMessageActivity"></activity>
     </application>
 
 </manifest>
