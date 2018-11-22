@@ -10,22 +10,24 @@
     app:titleTextColor="@color/colorAccent">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chat_toolbar_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:src="@drawable/pcdefault_small" />
 
     <TextView
+        android:id="@+id/chat_toolbar_username"
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="90dp"
-        android:gravity="center"
 
+        android:gravity="center"
+        android:padding="10dp"
         android:text="@string/enter_username"
         android:textColor="@color/colorAccent" />
 

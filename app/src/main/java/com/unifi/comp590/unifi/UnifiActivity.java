@@ -83,6 +83,7 @@ public class UnifiActivity extends AppCompatActivity {
             case R.id.main_account_logout:
                 mAuth.signOut();
                 LogoutUser();
+                return true;
             case R.id.main_account_settings:
                 Intent intent = new Intent(UnifiActivity.this, SettingsActivity.class);
                 startActivity(intent);
