@@ -43,7 +43,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public MessageViewHolder(View view) {
             super(view);
             messageText = (TextView) view.findViewById(R.id.single_message_text);
-            messageImage = (CircleImageView) view.findViewById(R.id.single_message_image);
+//            messageImage = (CircleImageView) view.findViewById(R.id.single_message_image);
 
         }
     }

@@ -53,6 +53,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:padding="5dp"
+            android:visibility="invisible"
             app:srcCompat="@drawable/send_text" />
     </LinearLayout>
 
