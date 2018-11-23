@@ -5,10 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +30,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,6 +56,11 @@ public class ChatMessageActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String mSenderId;
+    private RecyclerView messageListView;
+    private final List<Messages> messageList = new ArrayList<>();
+    private LinearLayoutManager linearLayoutManager;
+    private MessageAdapter messageAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,13 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mSenderId = mAuth.getCurrentUser().getUid();
+
+        messageAdapter = new MessageAdapter(messageList);
+        messageListView = (RecyclerView) findViewById(R.id.message_list);
+        linearLayoutManager = new LinearLayoutManager(this);
+        messageListView.setHasFixedSize(true);
+        messageListView.setLayoutManager(linearLayoutManager);
+        messageListView.setAdapter(messageAdapter);
 
         mSendMessageButton = (ImageButton) findViewById(R.id.send_text_button);
         mMessageText = (EditText) findViewById(R.id.chats_message_edit_text);
@@ -81,6 +100,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 //        mUserLastSeen = (TextView) findViewById(R.id.chat_too)
         mProfileImage = (CircleImageView) findViewById(R.id.chat_toolbar_image);
         mUserName.setText(mReceiverName);
+        FetchMessages();
 // TODO not working with thumbnails
         databaseReference.child("Users").child(mReceiverId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -136,23 +156,64 @@ public class ChatMessageActivity extends AppCompatActivity {
 
     }
 
+    private void FetchMessages() {
+        databaseReference.child("Users").child(mSenderId).child("Chats").child(mReceiverId).child(mSenderId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Messages messages = dataSnapshot.getValue(Messages.class);
+                messageList.add(messages);
+                messageAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void sendMessage() {
         String message = mMessageText.getText().toString();
         if (TextUtils.isEmpty(message)) {
         } else {
-            DatabaseReference message_key = mSenderChatsReference.push();
-            String message_push_id = message_key.getKey();
+            final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();
+            final String message_push_id = message_key.getKey();
+
+            String senderRef = "Users/" + mSenderId + "/Chats/" + mReceiverId + "/" + mSenderId;
+            String receiverRef = "Users/" + mReceiverId + "/Chats/" + mSenderId + "/" + mReceiverId;
+
             Map messageTextBody = new HashMap();
             messageTextBody.put("message", message);
-            messageTextBody.put("type", false);
+            messageTextBody.put("type", "text");
+            messageTextBody.put("seen", false);
             messageTextBody.put("time", ServerValue.TIMESTAMP);
-            Map messageBodyDetails = new HashMap();
-            messageBodyDetails.put(mSenderChatsReference.toString() + message_push_id, messageTextBody);
-            messageBodyDetails.put(mReceiverChatsReference.toString() + message_push_id, messageTextBody);
+            final Map messageBodyDetails = new HashMap();
+            //TODO
+            messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);
+            messageBodyDetails.put(receiverRef+"/"+message_push_id, messageTextBody);
             databaseReference.updateChildren(messageBodyDetails, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-
+                    if (databaseError!=null) {
+                        Log.d("log", "onComplete: " + databaseError.getMessage().toString()+"messagekey="+message_key+
+                        "messagepushid="+message_push_id+"\n body "+messageBodyDetails);
+                    }
+                    mMessageText.setText(null);
                 }
             });
 
