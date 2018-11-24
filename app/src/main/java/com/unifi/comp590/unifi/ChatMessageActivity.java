@@ -31,7 +31,6 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class ChatMessageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String mSenderId;
     private RecyclerView messageListView;
-    private final List<Messages> messageList = new ArrayList<>();
+    private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
 
@@ -157,11 +156,11 @@ public class ChatMessageActivity extends AppCompatActivity {
     }
 
     private void FetchMessages() {
-        databaseReference.child("Users").child(mSenderId).child("Chats").child(mReceiverId).child(mSenderId).addChildEventListener(new ChildEventListener() {
+        databaseReference.child("Users").child(mSenderId).child("Chats").child(mReceiverId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Messages messages = dataSnapshot.getValue(Messages.class);
-                messageList.add(messages);
+                Message message = dataSnapshot.getValue(Message.class);
+                messageList.add(message);
                 messageAdapter.notifyDataSetChanged();
             }
 
@@ -194,14 +193,15 @@ public class ChatMessageActivity extends AppCompatActivity {
             final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();
             final String message_push_id = message_key.getKey();
 
-            String senderRef = "Users/" + mSenderId + "/Chats/" + mReceiverId + "/" + mSenderId;
-            String receiverRef = "Users/" + mReceiverId + "/Chats/" + mSenderId + "/" + mReceiverId;
+            String senderRef = "Users/" + mSenderId + "/Chats/" + mReceiverId;
+            String receiverRef = "Users/" + mReceiverId + "/Chats/" + mSenderId;
 
             Map messageTextBody = new HashMap();
             messageTextBody.put("message", message);
             messageTextBody.put("type", "text");
             messageTextBody.put("seen", false);
             messageTextBody.put("time", ServerValue.TIMESTAMP);
+            messageTextBody.put("from", mSenderId);
             final Map messageBodyDetails = new HashMap();
             //TODO
             messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);

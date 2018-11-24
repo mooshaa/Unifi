@@ -1,9 +1,19 @@
 package com.unifi.comp590.unifi;
 
-public class Messages {
+public class Message {
     private String message, type;
     private long time;
     private boolean seen;
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    private String from;
 
     public String getMessage() {
         return message;
@@ -37,15 +47,16 @@ public class Messages {
         this.seen = seen;
     }
 
-    public Messages(String message, String type, long time, boolean seen) {
+    public Message(String message, String type, long time, boolean seen, String from) {
 
         this.message = message;
         this.type = type;
         this.time = time;
         this.seen = seen;
+        this.from = from;
     }
 
-    public Messages() {
+    public Message() {
 
     }
 }
