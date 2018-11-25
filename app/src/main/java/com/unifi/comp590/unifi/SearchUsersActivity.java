@@ -1,6 +1,5 @@
 package com.unifi.comp590.unifi;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +35,7 @@ public class SearchUsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_users);
 
-        mToolbar = (Toolbar) findViewById(R.id.search_users_tool_bar);
+        mToolbar = (Toolbar) findViewById(R.id.chats_display_tool_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Search User");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -12,14 +12,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/round_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <service android:name=".FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".UnifiActivity">
+        <activity android:name=".UnifiActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,29 +30,37 @@
         </activity>
         <activity
             android:name=".WelcomeActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UnifyLoginActivity" />
+        <activity android:name=".UnifyLoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NewAccountActivity"
-            android:parentActivityName=".UnifyLoginActivity" />
-        <activity android:name=".SettingsActivity" />
+            android:parentActivityName=".UnifyLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
+            android:theme="@style/Base.Theme.AppCompat"
+            android:screenOrientation="portrait" /> <!-- optional (needed if default theme has no action bar) -->
         <activity
             android:name=".SearchUsersActivity"
-            android:parentActivityName=".UnifiActivity" />
+            android:parentActivityName=".UnifiActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ChatActivity"
-            android:parentActivityName=".UnifiActivity" />
+            android:parentActivityName=".UnifiActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ChatMessageActivity"
-            android:parentActivityName=".UnifiActivity"></activity>
+            android:parentActivityName=".UnifiActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,9 @@ public class Chat {
     private String mUserName;
     private String mLastMessage;
 
+    public Chat() {
+    }
+
     public String getmLastMessage() {
         return mLastMessage;
     }

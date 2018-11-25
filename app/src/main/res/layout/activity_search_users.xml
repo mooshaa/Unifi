@@ -7,7 +7,7 @@
     tools:context=".SearchUsersActivity">
 
     <include
-        android:id="@+id/search_users_tool_bar"
+        android:id="@+id/chats_display_tool_bar"
         layout="@layout/toolbar_main">
 
     </include>
@@ -16,7 +16,7 @@
         android:id="@+id/search_users_list"
         android:layout_width="match_parent"
         android:layout_height="512dp"
-        android:layout_below="@+id/search_users_tool_bar"
+        android:layout_below="@+id/chats_display_tool_bar"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"

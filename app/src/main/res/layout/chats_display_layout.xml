@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="top"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,11 +16,12 @@
             android:layout_height="100dp"
             android:layout_margin="15dp"
             android:src="@drawable/default_profile" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/chats_display_layout_user_name"
@@ -32,7 +34,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            >
 
             <TextView
                 android:id="@+id/chats_display_layout_last_message"

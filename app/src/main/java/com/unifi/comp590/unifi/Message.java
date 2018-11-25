@@ -4,6 +4,7 @@ public class Message {
     private String message, type;
     private long time;
     private boolean seen;
+    private String from;
 
     public String getFrom() {
         return from;
@@ -13,7 +14,7 @@ public class Message {
         this.from = from;
     }
 
-    private String from;
+
 
     public String getMessage() {
         return message;
