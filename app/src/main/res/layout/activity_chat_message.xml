@@ -14,13 +14,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list"
         android:layout_width="match_parent"
-        android:layout_height="466dp"
+        android:layout_height="464dp"
         android:layout_above="@+id/linear_message_type_layout"
         android:layout_below="@+id/chat_message_toolbar"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="-1dp"
-        android:layout_marginBottom="1dp"></android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:padding="5dp"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/linear_message_type_layout"

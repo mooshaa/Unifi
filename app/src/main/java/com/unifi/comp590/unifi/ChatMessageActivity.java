@@ -72,7 +72,9 @@ public class ChatMessageActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(messageList);
         messageListView = (RecyclerView) findViewById(R.id.message_list);
         linearLayoutManager = new LinearLayoutManager(this);
-        messageListView.setHasFixedSize(true);
+
+        linearLayoutManager.setStackFromEnd(true);
+//        messageListView.setHasFixedSize(true);
         messageListView.setLayoutManager(linearLayoutManager);
         messageListView.setAdapter(messageAdapter);
 
@@ -145,6 +147,7 @@ public class ChatMessageActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
+
         });
         mSendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +165,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                 Message message = dataSnapshot.getValue(Message.class);
                 messageList.add(message);
                 messageAdapter.notifyDataSetChanged();
+                messageListView.smoothScrollToPosition(messageAdapter.getItemCount()-1);
+
             }
 
             @Override
@@ -216,7 +221,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                     mMessageText.setText(null);
                 }
             });
-
+            messageListView.smoothScrollToPosition(messageAdapter.getItemCount()-1);
         }
     }
 }
