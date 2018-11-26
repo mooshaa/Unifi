@@ -1,5 +1,7 @@
 package com.unifi.comp590.unifi;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -16,8 +18,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +32,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.unifi.comp590.unifi.ChatMessageActivity.downloadUrls.dlURL;
 
 public class ChatMessageActivity extends AppCompatActivity {
 
@@ -52,15 +65,22 @@ public class ChatMessageActivity extends AppCompatActivity {
 
     private ImageButton mSendMessageButton;
     private EditText mMessageText;
+    private ImageButton mImageButton;
 
     private FirebaseAuth mAuth;
     private String mSenderId;
+    private StorageReference imageStorageReference;
     private RecyclerView messageListView;
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
+    private final int GALLERY_CODE = 1;
 
 
+    public static class downloadUrls {
+        public static String dlURL;
+        public   static String thumbdlURL;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +100,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         mSendMessageButton = (ImageButton) findViewById(R.id.send_text_button);
         mMessageText = (EditText) findViewById(R.id.chats_message_edit_text);
+        mImageButton = (ImageButton) findViewById(R.id.imageButton);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -95,6 +116,7 @@ public class ChatMessageActivity extends AppCompatActivity {
 
         mReceiverChatsReference = databaseReference.child("Users").child(mReceiverId).child("Chats");
         mSenderChatsReference = databaseReference.child("Users").child(mSenderId).child("Chats");
+        imageStorageReference = FirebaseStorage.getInstance().getReference().child("Media");
 //        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        View view = layoutInflater.inflate(R.layout.chat) TODO ??
         mUserName = (TextView) findViewById(R.id.chat_toolbar_username);
@@ -153,6 +175,14 @@ public class ChatMessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
+            }
+        });
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/* video/*");
+                startActivityForResult(intent,GALLERY_CODE);
             }
         });
 
@@ -215,13 +245,56 @@ public class ChatMessageActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                     if (databaseError!=null) {
-                        Log.d("log", "onComplete: " + databaseError.getMessage().toString()+"messagekey="+message_key+
-                        "messagepushid="+message_push_id+"\n body "+messageBodyDetails);
+                        Log.d("log", "onComplete: " + databaseError.getMessage());
+                        Toast.makeText(ChatMessageActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+
                     }
                     mMessageText.setText(null);
                 }
             });
             messageListView.smoothScrollToPosition(messageAdapter.getItemCount()-1);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_CODE && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            final String senderRef = "Users/" + mSenderId + "/Chats/" + mReceiverId;
+            final String receiverRef = "Users/" + mReceiverId + "/Chats/" + mSenderId;
+            final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();
+            final String message_push_id = message_key.getKey();
+            StorageReference path = imageStorageReference.child("Pictures").child(message_push_id + ".jpg");
+            path.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                dlURL = uri.toString();
+                            }
+                        });
+                        Map messageTextBody = new HashMap();
+                        messageTextBody.put("message", dlURL);
+                        messageTextBody.put("type", "image");
+                        messageTextBody.put("seen", false);
+                        messageTextBody.put("time", ServerValue.TIMESTAMP);
+                        messageTextBody.put("from", mSenderId);
+                        final Map messageBodyDetails = new HashMap();
+                        //TODO
+                        messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);
+                        messageBodyDetails.put(receiverRef+"/"+message_push_id, messageTextBody);
+                    } else {
+                        Toast.makeText(ChatMessageActivity.this, "Check your internet connection,", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
+
+        }
+
     }
 }
