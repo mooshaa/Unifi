@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".UnifiActivity">
 
     <android.support.design.widget.FloatingActionButton
@@ -28,11 +29,11 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp">
 
-    <include
-        android:id="@+id/activity_unify_toolbar"
-        layout="@layout/toolbar_main">
+        <include
+            android:id="@+id/activity_unify_toolbar"
+            layout="@layout/toolbar_main">
 
-    </include>
+        </include>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/main_tabs"

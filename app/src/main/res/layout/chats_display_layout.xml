@@ -31,6 +31,7 @@
                 android:padding="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/enter_username"
+                android:textColor="@color/colorSecondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -41,9 +42,17 @@
                 android:layout_height="wrap_content"
                 android:padding="2dp"
                 android:text="last_message"
+                android:textColor="@color/colorSecondary"
                 android:textSize="15sp"
                 android:textStyle="italic" />
 
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        style="@style/Divider"
+        android:background="@color/colorSecondary"
+        android:foregroundGravity="right" />
+
+
 </LinearLayout>

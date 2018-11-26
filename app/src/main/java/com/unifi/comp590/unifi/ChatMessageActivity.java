@@ -192,7 +192,7 @@ public class ChatMessageActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        String message = mMessageText.getText().toString();
+        String message = mMessageText.getText().toString().trim();
         if (TextUtils.isEmpty(message)) {
         } else {
             final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();

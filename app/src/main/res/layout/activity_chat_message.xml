@@ -36,6 +36,14 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="41dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_camera_alt_black_24dp" />
+
         <EditText
             android:id="@+id/chats_message_edit_text"
             android:layout_width="303dp"
@@ -45,7 +53,8 @@
             android:hint="@string/new_message"
             android:inputType="textMultiLine"
             android:padding="10dp"
-            android:textColorHint="@android:color/white" />
+            android:textColor="?attr/colorAccent"
+            android:textColorHint="?attr/colorAccent" />
 
         <ImageButton
             android:id="@+id/send_text_button"
