@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +49,6 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.unifi.comp590.unifi.ChatMessageActivity.downloadUrls.dlURL;
 
 public class ChatMessageActivity extends AppCompatActivity {
 
@@ -266,26 +266,43 @@ public class ChatMessageActivity extends AppCompatActivity {
             final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();
             final String message_push_id = message_key.getKey();
             StorageReference path = imageStorageReference.child("Pictures").child(message_push_id + ".jpg");
+            final Map messageTextBody = new HashMap();
+
+            messageTextBody.put("type", "image");
+            messageTextBody.put("seen", false);
+            messageTextBody.put("time", ServerValue.TIMESTAMP);
+            messageTextBody.put("from", mSenderId);
             path.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
                     if (task.isSuccessful()) {
                         task.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                dlURL = uri.toString();
+                                downloadUrls.dlURL = uri.toString();
+                                messageTextBody.put("message", downloadUrls.dlURL);
+                                Log.d("Success", messageTextBody.toString());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                                Log.e("onFailure", "onFailure:",e );
                             }
                         });
-                        Map messageTextBody = new HashMap();
-                        messageTextBody.put("message", dlURL);
-                        messageTextBody.put("type", "image");
-                        messageTextBody.put("seen", false);
-                        messageTextBody.put("time", ServerValue.TIMESTAMP);
-                        messageTextBody.put("from", mSenderId);
+
                         final Map messageBodyDetails = new HashMap();
-                        //TODO
                         messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);
                         messageBodyDetails.put(receiverRef+"/"+message_push_id, messageTextBody);
+//                        Log.d("download", "onComplete: "+"download URL="+downloadUrls.dlURL);
+                        databaseReference.updateChildren(messageBodyDetails, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                if (databaseError!=null) {
+                                    Log.d("Database Error", databaseError.getMessage());
+                                }
+                            }
+                        });
                     } else {
                         Toast.makeText(ChatMessageActivity.this, "Check your internet connection,", Toast.LENGTH_SHORT).show();
                     }

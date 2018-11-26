@@ -89,8 +89,11 @@ public class ChatsFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                    if (!child.child("type").getValue().toString().equals("image")) {
+
                                     String message = child.child("message").getValue().toString();
                                     viewHolder.setmLastMessage(message);
+                                    }
                                 }
 
                             }
