@@ -301,6 +301,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 if (databaseError!=null) {
                                     Log.d("Database Error", databaseError.getMessage());
                                 }
+//                                mMessageText.setText("");
                             }
                         });
                     } else {
