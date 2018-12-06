@@ -266,12 +266,8 @@ public class ChatMessageActivity extends AppCompatActivity {
             final DatabaseReference message_key = mSenderChatsReference.child(mReceiverId).push();
             final String message_push_id = message_key.getKey();
             StorageReference path = imageStorageReference.child("Pictures").child(message_push_id + ".jpg");
-            final Map messageTextBody = new HashMap();
 
-            messageTextBody.put("type", "image");
-            messageTextBody.put("seen", false);
-            messageTextBody.put("time", ServerValue.TIMESTAMP);
-            messageTextBody.put("from", mSenderId);
+            final Map messageTextBody = new HashMap();
             path.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
@@ -280,8 +276,11 @@ public class ChatMessageActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 downloadUrls.dlURL = uri.toString();
-                                messageTextBody.put("message", downloadUrls.dlURL);
-                                Log.d("Success", messageTextBody.toString());
+
+
+
+                                Log.d("Success tag", downloadUrls.dlURL);
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -290,7 +289,12 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 Log.e("onFailure", "onFailure:",e );
                             }
                         });
-
+                        messageTextBody.put("type", "image");
+                        messageTextBody.put("seen", false);
+                        messageTextBody.put("time", ServerValue.TIMESTAMP);
+                        messageTextBody.put("from", mSenderId);
+                        messageTextBody.put("message", downloadUrls.dlURL);
+                        Log.d("Success tag", messageTextBody.toString());
                         final Map messageBodyDetails = new HashMap();
                         messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);
                         messageBodyDetails.put(receiverRef+"/"+message_push_id, messageTextBody);
