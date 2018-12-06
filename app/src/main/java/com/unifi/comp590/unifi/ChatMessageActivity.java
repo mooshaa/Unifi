@@ -252,7 +252,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                     mMessageText.setText(null);
                 }
             });
-            messageListView.smoothScrollToPosition(messageAdapter.getItemCount()-1);
+            if (messageAdapter.getItemCount()>0){
+            messageListView.smoothScrollToPosition(messageAdapter.getItemCount()-1);}
         }
     }
 

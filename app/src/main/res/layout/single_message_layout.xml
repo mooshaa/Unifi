@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
@@ -12,16 +13,30 @@
 
     <TextView
         android:id="@+id/single_message_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="2dp"
         android:background="@drawable/message_text_background_sender"
         android:padding="12dp"
         android:text="TextView"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/single_message_pic"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/single_message_text"
+        android:layout_alignTop="@+id/single_message_text"
+        android:layout_alignEnd="@+id/single_message_text"
+        android:layout_alignBottom="@+id/single_message_text"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="2dp"
+        android:padding="15dp" />
 </RelativeLayout>
