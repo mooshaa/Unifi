@@ -1,6 +1,8 @@
 package com.unifi.comp590.unifi;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.unifi.comp590.unifi.ViewHolder;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,8 +59,10 @@ public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
                 break;
             case R.layout.sender_pic:
                 holder = new SenderPicHolder(v);
+                break;
             case R.layout.receiver_pic:
                 holder = new ReceiverPicHolder(v);
+                break;
         }
 
         return holder;
@@ -100,12 +107,12 @@ public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
             if (messageList.get(position).getType().equals("text"))
                 return R.layout.single_message_layout2;
             else
-                return R.layout.sender_pic;
+                return R.layout.receiver_pic;
         } else {
             if (messageList.get(position).getType().equals("text"))
                 return R.layout.single_message_layout;
             else
-                return R.layout.receiver_pic;
+                return R.layout.sender_pic;
         }
     }
 
@@ -114,7 +121,6 @@ public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         public SenderViewHolder(View view) {
             super(view);
-
             messageText = (TextView) view.findViewById(R.id.single_message_text);
 
         }
@@ -160,13 +166,14 @@ public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
             super(view);
 
             mPic = (ImageView) view.findViewById(R.id.receiver_image);
-            Log.d("tag", "ReceiverPicHolder: "+mPic);
         }
 
         @Override
         public void bind(Message message) {
+            Log.d("tag", "ReceiverPicHolder: "+mPic+"     "+message.getMessage());
 
-            Picasso.get().load(message.getMessage()).into(mPic);
+            Picasso.get().load(message.getMessage()).placeholder(R.drawable.ic_cloud_download_black_24dp).into(mPic);
+
 
         }
     }
@@ -183,6 +190,21 @@ public class MessageAdapter extends RecyclerView.Adapter<ViewHolder> {
         @Override
         public void bind(Message message) {
         Picasso.get().load(message.getMessage()).into(mPic);
+//            URL url = null;
+//            try {
+//                url = new URL(message.getMessage());
+//                try {
+//                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                    mPic.setImageBitmap(bmp);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+
         }
+
     }
 }

@@ -107,7 +107,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/mnt/sda9/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_camera_alt_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/F:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/file/ic_cloud_download_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -117,9 +117,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="autoMirrored" value="true" />
                             <entry key="color" value="01b6cb" />
-                            <entry key="outputName" value="ic_camera_alt_black_24dp" />
-                            <entry key="sourceFile" value="$USER_HOME$" />
+                            <entry key="outputName" value="ic_cloud_download_black_24dp" />
+                            <entry key="sourceFile" value="C:\Users\Moosa" />
                           </map>
                         </option>
                       </PersistentState>
