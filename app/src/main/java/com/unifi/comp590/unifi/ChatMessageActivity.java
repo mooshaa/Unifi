@@ -311,8 +311,13 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 mMessageText.setText("");
                             }
                         });
-                    } else {
+
+                    }
+                    else {
                         Toast.makeText(ChatMessageActivity.this, "Check your internet connection,", Toast.LENGTH_SHORT).show();
+                    }
+                    if (downloadUrls.dlURL.equals(null)) {
+                        //TODO
                     }
                 }
             });
