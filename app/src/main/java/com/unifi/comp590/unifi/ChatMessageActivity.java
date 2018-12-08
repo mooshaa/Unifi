@@ -288,6 +288,8 @@ public class ChatMessageActivity extends AppCompatActivity {
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
                                 Log.e("onFailure", "onFailure:",e );
+                                Toast.makeText(ChatMessageActivity.this, "Error uploading image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         messageTextBody.put("type", "image");
@@ -306,7 +308,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                                 if (databaseError!=null) {
                                     Log.d("Database Error", databaseError.getMessage());
                                 }
-//                                mMessageText.setText("");
+                                mMessageText.setText("");
                             }
                         });
                     } else {
