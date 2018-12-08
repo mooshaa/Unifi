@@ -268,6 +268,7 @@ public class ChatMessageActivity extends AppCompatActivity {
             final String message_push_id = message_key.getKey();
             StorageReference path = imageStorageReference.child("Pictures").child(message_push_id + ".jpg");
 
+            final String[] m = new String[1];
             final Map messageTextBody = new HashMap();
             path.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -277,7 +278,11 @@ public class ChatMessageActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 downloadUrls.dlURL = uri.toString();
-
+                                if (downloadUrls.dlURL==null) {
+                                    //TODO
+                                     m[0] = imageStorageReference.child("Pictures").child(message_push_id).getDownloadUrl().getResult().toString();
+                                    Log.d("tag", "Image Check: "+ m[0]);
+                                }
 
 
                                 Log.d("Success tag", downloadUrls.dlURL);
@@ -297,6 +302,9 @@ public class ChatMessageActivity extends AppCompatActivity {
                         messageTextBody.put("time", ServerValue.TIMESTAMP);
                         messageTextBody.put("from", mSenderId);
                         messageTextBody.put("message", downloadUrls.dlURL);
+                        if (downloadUrls.dlURL == null) {
+                            messageTextBody.put("message", m[0]);
+                        }
                         Log.d("Success tag", messageTextBody.toString());
                         final Map messageBodyDetails = new HashMap();
                         messageBodyDetails.put(senderRef+"/"+message_push_id, messageTextBody);
@@ -316,9 +324,7 @@ public class ChatMessageActivity extends AppCompatActivity {
                     else {
                         Toast.makeText(ChatMessageActivity.this, "Check your internet connection,", Toast.LENGTH_SHORT).show();
                     }
-                    if (downloadUrls.dlURL.equals(null)) {
-                        //TODO
-                    }
+
                 }
             });
 
