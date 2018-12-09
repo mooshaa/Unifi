@@ -81,6 +81,7 @@ public class SearchUsersActivity extends AppCompatActivity {
                         intent.putExtra("user_name", userName[0]);
                         Log.d(TAG, "onClick: id="+ list_user_id+"  username="+ userName[0]);
                         startActivity(intent);
+                        finish();
                     }
                 });
             }

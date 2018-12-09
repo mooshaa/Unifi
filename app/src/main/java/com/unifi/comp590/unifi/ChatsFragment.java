@@ -93,7 +93,7 @@ public class ChatsFragment extends Fragment {
 
                                     String message = child.child("message").getValue().toString();
                                     viewHolder.setmLastMessage(message);
-                                    }
+                                    }else viewHolder.setmLastMessage("Image");
                                 }
 
                             }

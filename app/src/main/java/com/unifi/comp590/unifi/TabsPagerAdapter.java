@@ -13,12 +13,12 @@ class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int i) {
         switch (i) {
-            case 0:
+            case 0:ChatsFragment chatsFragment = new ChatsFragment();
+                return chatsFragment;
+
+            case 1:
                 RequestsFragment requestsFragment = new RequestsFragment();
                 return requestsFragment;
-            case 1:
-                ChatsFragment chatsFragment = new ChatsFragment();
-                return chatsFragment;
             case 2:
                 FriendsFragment friendsFragment = new FriendsFragment();
                 return friendsFragment;
@@ -36,10 +36,10 @@ class TabsPagerAdapter extends FragmentPagerAdapter {
 
     public CharSequence getPageTitle(int i) {
         switch (i) {
-            case 0:
-                return "Requests";
+            case 0:return "Chats";
+
             case 1:
-                return "Chats";
+                return "Requests";
             case 2:
                 return "Friends";
             default:
