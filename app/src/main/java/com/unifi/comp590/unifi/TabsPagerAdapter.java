@@ -16,12 +16,12 @@ class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:ChatsFragment chatsFragment = new ChatsFragment();
                 return chatsFragment;
 
-            case 1:
-                RequestsFragment requestsFragment = new RequestsFragment();
-                return requestsFragment;
-            case 2:
-                FriendsFragment friendsFragment = new FriendsFragment();
+            case 1:FriendsFragment friendsFragment = new FriendsFragment();
                 return friendsFragment;
+
+            case 2: RequestsFragment requestsFragment = new RequestsFragment();
+                return requestsFragment;
+
             default:
                 return null;
         }
@@ -38,10 +38,10 @@ class TabsPagerAdapter extends FragmentPagerAdapter {
         switch (i) {
             case 0:return "Chats";
 
-            case 1:
-                return "Requests";
-            case 2:
-                return "Friends";
+            case 1:return "Friends";
+
+            case 2:return "Requests";
+
             default:
                 return null;
         }
