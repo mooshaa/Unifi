@@ -69,7 +69,9 @@ public class NewAccountActivity extends AppCompatActivity {
 //        builder.setCancelable(false);
 //        builder.setView(R.layout.progress_bar);
         final AlertDialog mLoading = LoadingCircle.Circle(NewAccountActivity.this);
-        if (TextUtils.isEmpty(name)) {
+
+        if (TextUtils.isEmpty(name)||TextUtils.isEmpty(email)||TextUtils.isEmpty(password)){
+            if (TextUtils.isEmpty(name)) {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Name", Toast.LENGTH_LONG).show();
 
         } if (TextUtils.isEmpty(email)) {
@@ -79,7 +81,7 @@ public class NewAccountActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(NewAccountActivity.this, "Please Enter your Password", Toast.LENGTH_LONG).show();
 
-        } else {
+        }} else {
 //            mLoading.setTitle("Signing Up");
 //            mLoading.setMessage("Please Wait!");
             mLoading.show();
