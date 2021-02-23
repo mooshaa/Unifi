@@ -1,2 +1,2 @@
 # Unifi
-A simple messaging application.
+A simple android messaging application.
